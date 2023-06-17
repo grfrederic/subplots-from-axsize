@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "subplots-from-axsize"
+version = "0.1.0"
+description = ""
+authors = ["Frederic Grabowski <grabowski.frederic@gmail.com>"]
+readme = "README.md"
+packages = [{include = "subplots_from_axsize", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+matplotlib = "^3.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
