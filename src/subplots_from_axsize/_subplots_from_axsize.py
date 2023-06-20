@@ -1,6 +1,7 @@
 """Implementation of subplots_from_axsize()"""
 
 from collections.abc import Iterable
+from typing import Optional, Tuple, Union
 
 import matplotlib.pyplot as plt
 import mpl_toolkits.axes_grid1 as ag
@@ -24,12 +25,17 @@ def _sync_counts(n, axs, ds, row_or_col):
 
     ns = {n1, n2, n3} - {None}
 
-    assert len(ns) < 2, f"Inconsistent {row_or_col} count.\n{n = }, {axs = }, {ds = }"
+    assert len(ns) < 2, (
+        f"Inconsistent {row_or_col} count.\n"
+        f"declared: {n}\n"
+        f"ax sizes: {axs}\n"
+        f"spaces: {ds}"
+    )
 
     if len(ns) == 0:
         n = 1
     else:
-        n, = ns
+        (n,) = ns
         assert isinstance(n, int)
 
     if not isinstance(axs, list):
@@ -48,11 +54,7 @@ def _make_sizes(start, axs, end, spaces):
     assert len(spaces) == n - 1
 
     # interleave ax sizes and spaces
-    ds = [start] + [
-        l
-        for pair in zip(axs, spaces + [end])  # same lengths!
-        for l in pair
-    ]
+    ds = [start] + [l for pair in zip(axs, spaces + [end]) for l in pair]
 
     sizes = [ag.Size.Fixed(d) for d in ds]
 
@@ -60,16 +62,16 @@ def _make_sizes(start, axs, end, spaces):
 
 
 def subplots_from_axsize(
-    axsize=(3, 2),
-    nrows=None,
-    ncols=None,
-    top=0.1,
-    bottom=0.5,
-    left=0.5,
-    right=0.1,
-    hspace=0.5,
-    wspace=0.5,
-    squeeze=True,
+    nrows: Optional[int] = None,
+    ncols: Optional[int] = None,
+    axsize: Tuple[Union[float, list[float]], Union[float, list[float]]] = (4, 3),
+    top: float = 0.1,
+    bottom: float = 0.5,
+    left: float = 0.6,
+    right: float = 0.2,
+    hspace: Union[float, list[float]] = 0.5,
+    wspace: Union[float, list[float]] = 0.5,
+    squeeze: bool = True,
 ):
     """
     Similar to plt.subplots() but uses fixed instead of relative sizes.
