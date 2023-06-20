@@ -65,12 +65,13 @@ def subplots_from_axsize(
     nrows: Optional[int] = None,
     ncols: Optional[int] = None,
     axsize: Tuple[Union[float, list[float]], Union[float, list[float]]] = (4, 3),
-    top: float = 0.1,
-    bottom: float = 0.5,
+    *,
     left: float = 0.6,
+    bottom: float = 0.5,
     right: float = 0.2,
+    top: float = 0.1,
+    wspace: Union[float, list[float]] = 0.75,
     hspace: Union[float, list[float]] = 0.5,
-    wspace: Union[float, list[float]] = 0.5,
     squeeze: bool = True,
 ):
     """
@@ -86,8 +87,8 @@ def subplots_from_axsize(
     # standardize types
     axx = _list_or_float(axx)
     axy = _list_or_float(axy)
-    hspace = _list_or_float(hspace)
     wspace = _list_or_float(wspace)
+    hspace = _list_or_float(hspace)
 
     # make sure counts agree and convert to lists
     ncols, axx, wspace = _sync_counts(ncols, axx, wspace, "col")
