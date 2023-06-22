@@ -75,13 +75,40 @@ def subplots_from_axsize(
     squeeze: bool = True,
 ):
     """
-    Similar to plt.subplots() but uses fixed instead of relative sizes.
+    Similar to plt.subplots() but uses fixed sizes (inches) instead of fractions.
     This allows for more control over the final axes sizes.
 
-    Examples:
+    Parameters
+    ----------
+    nrows, ncols : int, optional, default: None
+        Number of rows/columns of the subplot grid.
+
+    axsize : tuple of sizes, default: (3, 4)
+        Each size can be either a float or list of floats (inches).
+        If either entry is a list, it will be used to determine `nrows`/`ncols`.
+
+    left, bottom, right, top : floats, defaults: 0.6, 0.5, 0.2, 0.1
+        Specify figure margins (in inches).
+
+    wspace, hspace : sizes, defaults: 0.75, 0.5
+        Each size can be either a float or list of floats (inches).
+        If either entry is a list, it will be used to determine `nrows`/`ncols`.
+
+    squeeze : bool, default: True
+        If True, returns `axs` like subplots, by removing array axes with length 1.
+        If False, always returns an array of axes with shape ``(nrows, ncols)`.
+
+    Returns
+    -------
+        fig, axs : same as plt.subplots()
+
+    Examples
+    --------
     fig, axs = subplots_from_axsize(axsize=(3, 2), nrows=2) creates a figure with two axes of size (3, 2)
     fig, axs = subplots_from_axsize(axsize=(3, [2, 1])) creates a figure with two axes: (3, 2) and (3, 1)
+
     """
+
     axx, axy = axsize
 
     # standardize types
