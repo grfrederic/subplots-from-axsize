@@ -73,6 +73,7 @@ def subplots_from_axsize(
     wspace: Union[float, list[float]] = 0.75,
     hspace: Union[float, list[float]] = 0.5,
     squeeze: bool = True,
+    **fig_kw,
 ):
     """
     Similar to plt.subplots() but uses fixed sizes (inches) instead of fractions.
@@ -98,16 +99,32 @@ def subplots_from_axsize(
         If True, extra dimensions (with length 1) are removed from `axs`.
         If False, always returns an array of axes with shape ``(nrows, ncols)`.
 
+    **fig_kw
+        All additional kwargs passed to the `figure()` call.
+        Should not contain `figsize` and any `_layout` kwargs.
+
     Returns
     -------
         fig, axs : same as plt.subplots()
 
     Examples
     --------
-    fig, axs = subplots_from_axsize(axsize=(3, 2), nrows=2) creates a figure with two axes of size (3, 2)
-    fig, axs = subplots_from_axsize(axsize=(3, [2, 1])) creates a figure with two axes: (3, 2) and (3, 1)
+    Create a figure with two axes of size (3, 2):
+    ```
+    fig, axs = subplots_from_axsize(axsize=(3, 2), nrows=2)
+    ```
+
+    Create a figure with two axes, (3, 2) and (3, 1):
+    ```
+    fig, axs = subplots_from_axsize(axsize=(3, [2, 1]))
+    ```
 
     """
+
+    assert 'figsize' not in fig_kw
+    assert 'tight_layout' not in fig_kw
+    assert 'constrained_layout' not in fig_kw
+    assert 'layout' not in fig_kw
 
     axx, axy = axsize
 
@@ -124,7 +141,7 @@ def subplots_from_axsize(
     w_sizes, total_w = _make_sizes(left, axx, right, wspace)
     h_sizes, total_h = _make_sizes(top, axy, bottom, hspace)
 
-    fig = plt.figure(figsize=(total_w, total_h))
+    fig = plt.figure(figsize=(total_w, total_h), **fig_kw)
 
     divider = ag.Divider(fig, (0, 0, 1, 1), w_sizes, h_sizes[::-1], aspect=False)
     axs = np.array(
