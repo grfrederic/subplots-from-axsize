@@ -93,6 +93,7 @@ def subplots_from_axsize(
 
     wspace, hspace : sizes, defaults: 0.75, 0.5
         Each size can be either a float or list of floats (inches).
+        `wspace` (`hspace`) specifies the distance(s) between columns (rows).
         If either entry is a list, it will be used to determine `nrows`/`ncols`.
 
     squeeze : bool, default: True
