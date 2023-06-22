@@ -5,6 +5,9 @@ This package provides a single function, `subplots_from_axsize()`, which is base
 * `wspace`, `hspace` use inches instead of fractions
 * `axsize`, `wspace`, `hspace` can take lists as arguments (see example #2 below)
 
+## rationale
+Specifying sizes directly makes it easier to achieve consistent axis sizes across figures. Suppose you're plotting different time series and you would a consistent inches / week on your x axis. Or you carefully crafted your figures but suddenly you need a little extra space for you labels. Or you would want to move the axes a little bit apart and *not* rescale everything else in the whole world simultaneously. 
+
 ## getting started
 The package is available on [PyPi](https://pypi.org/project/subplots-from-axsize/).
 
