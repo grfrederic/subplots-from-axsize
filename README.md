@@ -1,9 +1,9 @@
 ## subplots_from_axsize
-Alternative for matplotlib's subplots() (and adjust_subplots()) which uses exact measurements rather than fractions.
-* `axsize` instead of `figsize`
+This package provides a single function, `subplots_from_axsize()`, which is based on matplotlib's `subplots()` and `adjust_subplots()` functions, but:
+* `figsize` is replaced by `axsize`
 * `left`, `bottom`, `right`, `top` use inches instead of fractions
 * `wspace`, `hspace` use inches instead of fractions
-* 'axsize', 'wspace', 'hspace' can take lists as arguments (see example #2 below)
+* `axsize`, `wspace`, `hspace` can take lists as arguments (see example #2 below)
 
 ## getting started
 The package is available on [PyPi](https://pypi.org/project/subplots-from-axsize/).
@@ -13,15 +13,21 @@ The package is available on [PyPi](https://pypi.org/project/subplots-from-axsize
 import matplotlib.pyplot as plt
 from subplots_from_axsize import subplots_from_axsize
 
-fig, ax = subplots_from_axsize()
+fig, ax = subplots_from_axsize(
+    axsize=(4, 3),
+    left=0.9, bottom=0.5, top=0.3, right=0.2,
+)
 
 ax.set_xlabel('x label')
-ax.set_ylabel('y label')
+ax.set_ylabel('y label\nbut much\nmuch longer')
+ax.set_title('important!')
 fig.patch.set_facecolor('#ffbbff')
 ```
-![image](https://github.com/grfrederic/subplots-from-axsize/assets/26434160/f3440071-22e7-4e9c-a985-5aad3f52f3f7)
+![image](https://github.com/grfrederic/subplots-from-axsize/assets/26434160/3fe370d5-0ff4-4387-b94e-3a266b97425d)
+Since the default dpi in matplotlib is 100, the axis is exactly 400x300 pixels. The left margin, for example, is 0.9 × 100 = 90 pixels. Changing the margins does not change the axis size (you have my promise).
 
 ## example #2
+Additionally, `subplots_from_axsize` makes it easy to create multiple axes.
 ```
 import matplotlib.pyplot as plt
 from subplots_from_axsize import subplots_from_axsize
