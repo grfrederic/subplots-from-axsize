@@ -10,6 +10,9 @@ packages = [{include = "subplots_from_axsize", from = "src"}]
 python = "^3.8"
 matplotlib = "^3.5"
 
+[tool.poetry.group.test]
+optional = true
+
 [tool.poetry.group.test.dependencies]
 pytest = "^7.0.0"
 
