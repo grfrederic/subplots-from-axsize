@@ -95,7 +95,7 @@ def subplots_from_axsize(
         If either entry is a list, it will be used to determine `nrows`/`ncols`.
 
     squeeze : bool, default: True
-        If True, returns `axs` like subplots, by removing array axes with length 1.
+        If True, extra dimensions (with length 1) are removed from `axs`.
         If False, always returns an array of axes with shape ``(nrows, ncols)`.
 
     Returns
