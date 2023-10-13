@@ -61,6 +61,40 @@ def _make_sizes(start, axs, end, spaces):
     return sizes, sum(ds)
 
 
+def _set_shares(axs, axis, share):
+    if isinstance(share, bool):
+        share = 'all' if share else 'none'
+
+    assert axis in ['x', 'y']
+    assert share in ['none', 'all', 'row', 'col']
+
+    def set_share(ax, ax0):
+        if axis == 'x':
+            ax.sharex(ax0)
+        else:
+            ax.sharey(ax0)
+
+    if share == 'none':
+        return
+
+    if share == 'all':
+        ax0 = axs[0, 0]
+        for ax in axs.ravel()[1:]:
+            set_share(ax, ax0)
+
+    if share == 'row':
+        for row in axs:
+            ax0 = row[0]
+            for ax in row[1:]:
+                set_share(ax, ax0)
+
+    if share == 'col':
+        for col in axs.T:
+            ax0 = col[0]
+            for ax in col[1:]:
+                set_share(ax, ax0)
+
+
 def subplots_from_axsize(
     nrows: Optional[int] = None,
     ncols: Optional[int] = None,
@@ -72,6 +106,8 @@ def subplots_from_axsize(
     top: float = 0.1,
     wspace: Union[float, list[float]] = 0.75,
     hspace: Union[float, list[float]] = 0.5,
+    sharex: Union[bool, str] = False,
+    sharey: Union[bool, str] = False,
     squeeze: bool = True,
     **fig_kw,
 ):
@@ -95,6 +131,10 @@ def subplots_from_axsize(
         Each size can be either a float or list of floats (inches).
         `wspace` (`hspace`) specifies the distance(s) between columns (rows).
         If either entry is a list, it will be used to determine `nrows`/`ncols`.
+
+    sharex, sharey : bool or {'none', 'all', 'row', 'col'}, default: False
+        True is treated like 'all', False is treated like 'none'.
+        Does _not_ turn off ticklabels.
 
     squeeze : bool, default: True
         If True, extra dimensions (with length 1) are removed from `axs`.
@@ -157,6 +197,9 @@ def subplots_from_axsize(
             for row in range(nrows - 1, -1, -1)
         ]
     )
+
+    _set_shares(axs, 'x', sharex)
+    _set_shares(axs, 'y', sharey)
 
     if squeeze:
         axs = np.squeeze(axs)
