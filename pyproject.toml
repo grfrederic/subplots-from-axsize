@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "subplots-from-axsize"
-version = "0.1.8"
+version = "0.1.9"
 description = ""
 authors = ["Frederic Grabowski <grabowski.frederic@gmail.com>"]
 readme = "README.md"
